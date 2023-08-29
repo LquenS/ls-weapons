@@ -92,8 +92,8 @@ LS_CORE.Callback.Functions.CreateCallback("weapons:server:RepairWeapon", functio
     local Player = LS_CORE.Functions.GetPlayer(src)
     local minute = 60 * 1000
     local Timeout = math.random(5 * minute, 10 * minute)
-    local WeaponData = QBCore.Shared.Weapons[GetHashKey(data.name)]
-    local WeaponClass = (QBCore.Shared.SplitStr(WeaponData.ammotype, "_")[2]):lower()
+    local WeaponData = Config.Weapons[GetHashKey(data.name)]
+    local WeaponClass = (Config.Shared.SplitStr(WeaponData.ammotype, "_")[2]):lower()
 
     if Player.DATA.items[data.slot] then
         if Player.DATA.items[data.slot].info.quality then
@@ -149,7 +149,7 @@ LS_CORE.Callback.Functions.CreateCallback('prison:server:checkThrowable', functi
     if not Player then return cb(false) end
     local throwable = false
     for _,v in pairs(Config.Throwables) do
-        if QBCore.Shared.Weapons[weapon].name == 'weapon_'..v then
+        if Config.Weapons[weapon].name == 'weapon_'..v then
             if not Player.Functions.RemoveItem('weapon_'..v, 1) then return cb(false) end
             throwable = true
             break
@@ -197,7 +197,7 @@ end)
 RegisterNetEvent('weapons:server:UpdateWeaponQuality', function(data, RepeatAmount)
     local src = source
     local Player = LS_CORE.Functions.GetPlayer(src)
-    local WeaponData = QBCore.Shared.Weapons[GetHashKey(data.name)]
+    local WeaponData = Config.Weapons[GetHashKey(data.name)]
     local WeaponSlot = Player.DATA.items[data.slot]
     local DecreaseAmount = Config.DurabilityMultiplier[data.name]
     if WeaponSlot then
